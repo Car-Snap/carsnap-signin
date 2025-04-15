@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CarSnap Sign-In</title>
-    
+
     <!-- Firebase SDK -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
         // Your Firebase config
         const firebaseConfig = {
@@ -22,7 +23,7 @@
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
+        const auth = getAuth(app); // Firebase Auth initialization
 
         // Google Sign-In function
         function signInWithGoogle() {
@@ -113,7 +114,7 @@
     <div class="container">
         <h1>Welcome to CarSnap!</h1>
         <p>Please sign in with Google to start tracking your car sightings.</p>
-        <!-- Corrected button to call the right function -->
+        <!-- Sign in button -->
         <button onclick="signInWithGoogle()">Sign in with Google</button>
     </div>
 </body>
