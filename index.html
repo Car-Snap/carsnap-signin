@@ -6,8 +6,47 @@
     <title>CarSnap Sign-In</title>
     
     <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
+
+        // Your Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyCIxDqsNlzq3yqOs3cHUufQBLmuTpiYYUI",
+            authDomain: "carsnapapp-29ab6.firebaseapp.com",
+            projectId: "carsnapapp-29ab6",
+            storageBucket: "carsnapapp-29ab6.firebasestorage.app",
+            messagingSenderId: "17896667556",
+            appId: "1:17896667556:web:3f1c77fb23a6ced1fd2931"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Google Sign-In function
+        function signInWithGoogle() {
+            const provider = new GoogleAuthProvider();
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    // Redirect to Thunkable app with UID
+                    window.location.href = `https://your-thunkable-app-url.com?uid=${user.uid}`;
+                })
+                .catch((error) => {
+                    console.error("Error during sign-in:", error);
+                });
+        }
+
+        // Listen for user state changes
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                console.log(`User logged in: ${user.displayName}`);
+            } else {
+                console.log('User logged out');
+            }
+        });
+    </script>
 
     <style>
         /* Basic page styling */
@@ -21,6 +60,7 @@
             height: 100vh;
             margin: 0;
             text-align: center;
+            overflow: hidden;
         }
 
         .container {
@@ -67,45 +107,6 @@
             }
         }
     </style>
-
-    <script>
-        // Your Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyCIxDqsNlzq3yqOs3cHUufQBLmuTpiYYUI",
-            authDomain: "carsnapapp-29ab6.firebaseapp.com",
-            projectId: "carsnapapp-29ab6",
-            storageBucket: "carsnapapp-29ab6.firebasestorage.app",
-            messagingSenderId: "17896667556",
-            appId: "1:17896667556:web:3f1c77fb23a6ced1fd2931"
-        };
-
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-
-        // Google Sign-In
-        function signInWithGoogle() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
-                .then((result) => {
-                    const user = result.user;
-                    // Redirect to Thunkable app with UID
-                    window.location.href = `https://your-thunkable-app-url.com?uid=${user.uid}`;
-                })
-                .catch((error) => {
-                    console.error(error.message);
-                });
-        }
-
-        // Listen for state changes
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                console.log(`User logged in: ${user.displayName}`);
-            } else {
-                console.log('User logged out');
-            }
-        });
-    </script>
 </head>
 <body>
     <div class="container">
