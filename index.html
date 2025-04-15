@@ -26,11 +26,12 @@
 
         // Google Sign-In function
         function signInWithGoogle() {
+            console.log("signInWithGoogle function called");
             const provider = new GoogleAuthProvider();
             signInWithPopup(auth, provider)
                 .then((result) => {
                     const user = result.user;
-                    // Redirect to Thunkable app with UID
+                    console.log("User signed in:", user);
                     window.location.href = `https://your-thunkable-app-url.com?uid=${user.uid}`;
                 })
                 .catch((error) => {
