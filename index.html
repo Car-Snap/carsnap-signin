@@ -1,108 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarSnap Sign-In</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YourAppName Sign-In</title>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js"></script>
+  <!-- Load Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js"></script>
 
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f5f5f5;
-        }
+  <script>
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCIxDqsNlzq3yqOs3cHUufQBLmuTpiYYUI",
+      authDomain: "carsnapapp-29ab6.firebaseapp.com",
+      projectId: "carsnapapp-29ab6",
+      storageBucket: "carsnapapp-29ab6.firebasestorage.app",
+      messagingSenderId: "17896667556",
+      appId: "1:17896667556:web:3f1c77fb23a6ced1fd2931"
+    };
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
 
-        .container {
-            text-align: center;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+    function signInWithGoogle() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider)
+        .then((result) => {
+          const user = result.user;
+          console.log("User signed in:", user);
+          window.location.href = "home.html"; // Redirect to the main app page
+        })
+        .catch((error) => {
+          console.error("Error during sign-in:", error);
+        });
+    }
+  </script>
 
-        h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
 
-        p {
-            font-size: 16px;
-            margin-bottom: 20px;
-        }
+    .sign-in-container {
+      background-color: white;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
 
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4285f4;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+    .sign-in-container h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
 
-        button:hover {
-            background-color: #357ae8;
-        }
-    </style>
+    .sign-in-container button {
+      padding: 15px;
+      font-size: 18px;
+      background-color: #1d72b8;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      width: 100%;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .sign-in-container button:hover {
+      background-color: #155a8a;
+    }
+
+    .social-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .social-buttons button {
+      width: 48%;
+      padding: 15px;
+      font-size: 16px;
+      background-color: #db4437; /* Google red */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .social-buttons button:hover {
+      background-color: #c1351d;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to CarSnap!</h1>
-        <p>Please sign in with Google to start tracking your car sightings.</p>
-        <button onclick="signInWithGoogle()">Sign in with Google</button>
-        <div id="user-info"></div> <!-- Display user info after successful sign-in -->
+  <div class="sign-in-container">
+    <!-- Replace the logo with your custom branding -->
+    <img src="your-logo.png" alt="YourAppName Logo" style="width: 150px; margin-bottom: 20px;">
+
+    <h1>Welcome to YourAppName</h1>
+    <button onclick="signInWithGoogle()">Sign in with Google</button>
+
+    <div class="social-buttons">
+      <button>Sign in with Facebook</button>
+      <button>Sign in with Apple</button>
     </div>
 
-    <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyCIxDqsNlzq3yqOs3cHUufQBLmuTpiYYUI",
-            authDomain: "carsnapapp-29ab6.firebaseapp.com",
-            projectId: "carsnapapp-29ab6",
-            storageBucket: "carsnapapp-29ab6.firebasestorage.app",
-            messagingSenderId: "17896667556",
-            appId: "1:17896667556:web:3f1c77fb23a6ced1fd2931"
-        };
-
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-
-        // Sign in with Google function
-        function signInWithGoogle() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
-                .then((result) => {
-                    const user = result.user;
-                    console.log("User signed in:", user);
-
-                    // Display user information on the page
-                    document.getElementById('user-info').innerHTML = `
-                        <h3>Welcome, ${user.displayName}</h3>
-                        <p>Email: ${user.email}</p>
-                        <img src="${user.photoURL}" alt="Profile Picture" style="width: 100px; height: 100px;">
-                    `;
-                })
-                .catch((error) => {
-                    console.error("Error during sign-in:", error);
-                });
-        }
-
-        // Check for user state changes (logged in or out)
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                console.log(`User logged in: ${user.displayName}`);
-            } else {
-                console.log('User logged out');
-            }
-        });
-    </script>
+    <p>Don't have an account? <a href="#">Sign up</a></p>
+  </div>
 </body>
 </html>
