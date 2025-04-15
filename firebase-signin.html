@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in with Google - CarSnap</title>
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+      // Import the functions you need from the SDK
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+      import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCIxDqsNlzq3yqOs3cHUufQBLmuTpiYYUI",
+        authDomain: "carsnapapp-29ab6.firebaseapp.com",
+        projectId: "carsnapapp-29ab6",
+        storageBucket: "carsnapapp-29ab6.appspot.com",
+        messagingSenderId: "17896667556",
+        appId: "1:17896667556:web:3f1c77fb23a6ced1fd2931"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const provider = new GoogleAuthProvider();
+
+      // Function to handle Google Sign-In
+      function login() {
+        signInWithPopup(auth, provider)
+          .then((result) => {
+            // Get user info
+            const user = result.user;
+            console.log("User Signed in: ", user);
+            // Redirect to Thunkable app or other pages
+            window.location.href = `https://example.com?uid=${user.uid}`;
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(`Error Code: ${errorCode}, Message: ${errorMessage}`);
+          });
+      }
+
+      // Monitor auth state (Optional, for auto login detection)
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          window.location.href = `https://example.com?uid=${user.uid}`;
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <button onclick="login()">Sign in with Google</button>
+  </body>
+</html>
